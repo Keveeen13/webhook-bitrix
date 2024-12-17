@@ -5,24 +5,31 @@ const fs = require('fs');
 const express = require('express');
 const app = express();
 
+require('dotenv').config();
+console.log('GOOGLE_KEY_FILE:', process.env.GOOGLE_KEY_FILE);
+console.log('GOOGLE_CLIENT_EMAIL:', process.env.GOOGLE_CLIENT_EMAIL);
+console.log('GOOGLE_SCOPES:', process.env.GOOGLE_SCOPES);
+console.log('Caminho do arquivo JSON:', process.env.GOOGLE_KEY_FILE);
+
 app.use(express.json());
 
 // Configurações Bitrix24
-const BITRIX_WEBHOOK_URL = 'https://onacrm.bitrix24.com.br/rest/40/3xxs5dmvbo782ttd/'; // URL de webhook
+const BITRIX_WEBHOOK_URL = process.env.BITRIX_WEBHOOK_URL; // URL de webhook
 
 // ID do Funil e da Etapa
-const CATEGORY_ID = 18; // ID do funil específico
-const STAGE_ID = 'C18:NEW'; // ID da etapa específica no funil
+const CATEGORY_ID = 12; // ID do funil específico
+const STAGE_ID = 'C12:UC_J5IBFP'; // ID da etapa específica no funil
 
 // Configurações Google Sheets
-const SPREADSHEET_ID = '11gUJr79M6_-m0Id9ibwo-qPVpVhNcD7_zaXJrajvb5U'; // ID da planilha
+const SPREADSHEET_ID = process.env.SPREADSHEET_ID; // ID da planilha
 const GOOGLE_SHEET_RANGE = 'Sheets1!A2'; // Nome da sua aba e intervalo desejado
 
 // Autenticação do Google Sheets
 async function authenticateGoogle() {
   const auth = new google.auth.GoogleAuth({
-    keyFile: './curious-skyline-438716-g6-4fe163ceb797.json', // Caminho do arquivo de credenciais JSON
-    scopes: ['https://www.googleapis.com/auth/spreadsheets'], // Auth da Google
+    keyFile: process.env.GOOGLE_KEY_FILE.replace(/\\n/g, '\n'), // Caminho do arquivo de credenciais JSON
+    scopes: [process.env.GOOGLE_SCOPES], // Auth da Google
+    client_email: process.env.GOOGLE_CLIENT_EMAIL,
   });
   return await auth.getClient();
 }
