@@ -17,8 +17,8 @@ app.use(express.json());
 const BITRIX_WEBHOOK_URL = process.env.BITRIX_WEBHOOK_URL; // URL de webhook
 
 // ID do Funil e da Etapa
-const CATEGORY_ID = 12; // ID do funil específico
-const STAGE_ID = 'C12:UC_J5IBFP'; // ID da etapa específica no funil
+const CATEGORY_ID = 18; // ID do funil específico
+const STAGE_ID = 'C18:NEW'; // ID da etapa específica no funil
 
 // Configurações Google Sheets
 const SPREADSHEET_ID = process.env.SPREADSHEET_ID; // ID da planilha
